@@ -2,7 +2,7 @@ const { User, sequelize } = require("../models");
 const { Op } = require("sequelize");
 
 class LocationService {
-  getUsersInProximity(latitude, longitude) {
+  getUsersInProximity(id, latitude, longitude) {
     // get users which are active and within 1km radius of passed cordinates
     const cordinatesNotNullCheck = {
       [Op.and]: [
@@ -28,17 +28,36 @@ class LocationService {
       ),
       1000
     );
+
+    // const distance = sequelize.fn(
+    //   "ST_Distance_Sphere",
+    //   sequelize.literal("ST_MakePoint(latitude, longitude)"),
+    //   sequelize.literal(`ST_MakePoint(${latitude},${longitude})`)
+    // );
+
     // only get users who were updated in the last 2 mins
     const userStatusCheck = {
       updatedAt: {
-        [Op.lte]: sequelize.literal("NOW() - (INTERVAL '2 MINUTE')"),
+        [Op.gte]: sequelize.literal("NOW() - (INTERVAL '2 MINUTE')"),
+      },
+    };
+
+    // exculde the requesting user from the list
+    const excludeUser = {
+      id: {
+        [Op.ne]: id,
       },
     };
 
     return User.findAll({
       attributes: ["id", "username", "profilePic"],
       where: {
-        [Op.and]: [cordinatesNotNullCheck, proximityCheck, userStatusCheck],
+        [Op.and]: [
+          cordinatesNotNullCheck,
+          proximityCheck,
+          userStatusCheck,
+          excludeUser,
+        ],
       },
     });
   }

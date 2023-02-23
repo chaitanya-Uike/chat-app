@@ -24,7 +24,7 @@ class UserService {
 
     const { latitude, longitude } = user;
 
-    return locationService.getUsersInProximity(latitude, longitude);
+    return locationService.getUsersInProximity(id, latitude, longitude);
   }
 
   processHeartbeat({ id, latitude, longitude }) {
