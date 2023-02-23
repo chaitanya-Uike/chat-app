@@ -11,7 +11,7 @@ const registerSchema = {
         minLength: 6,
       },
     },
-    required: ["email", "username", "password"],
+    required: ["email", "password"],
   },
 };
 

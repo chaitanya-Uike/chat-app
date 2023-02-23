@@ -17,7 +17,7 @@ async function start() {
 }
 
 db.sequelize
-  .sync({ force: true })
+  .sync({ alter: true })
   .then(() => {
     start();
   })
