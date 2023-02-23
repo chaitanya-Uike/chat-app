@@ -16,8 +16,6 @@ async function start() {
   console.log("[server]💫 ready at", address);
 }
 
-const LocationService = require("./services/locationService");
-
 db.sequelize
   .sync()
   .then(() => {
