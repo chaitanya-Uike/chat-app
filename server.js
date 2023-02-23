@@ -9,6 +9,7 @@ fastify.register(require("@fastify/static"), {
 fastify.register(require("@fastify/auth"));
 fastify.decorate("verifyJWT", require("./plugins/authorization"));
 fastify.register(require("./routes/auth"), { prefix: "/auth" });
+fastify.register(require("./routes/users"), { prefix: "/users" });
 
 async function start() {
   const port = process.env.PORT || 5000;
@@ -17,7 +18,7 @@ async function start() {
 }
 
 db.sequelize
-  .sync()
+  .sync({ alter: true })
   .then(() => {
     start();
   })

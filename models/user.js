@@ -45,11 +45,6 @@ module.exports = (sequelize, DataTypes) => {
       longitude: {
         type: DataTypes.FLOAT,
       },
-      isOnline: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: false,
-      },
     },
     {
       sequelize,
