@@ -6,9 +6,6 @@ const registerSchema = {
         type: "string",
         format: "email",
       },
-      username: {
-        type: "string",
-      },
       password: {
         type: "string",
         minLength: 6,

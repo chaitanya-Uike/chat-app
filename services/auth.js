@@ -4,8 +4,8 @@ const db = require("../models");
 const { AuthError } = require("../lib/serverErrors");
 
 class AuthService {
-  register({ email, username, password }) {
-    return db.User.create({ email, username, password });
+  register({ email, password }) {
+    return db.User.create({ email, password });
   }
 
   async login({ email, password }) {
