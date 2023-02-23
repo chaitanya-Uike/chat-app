@@ -1,8 +1,10 @@
 const fastify = require("fastify")({ logger: true });
 const db = require("./models");
+const path = require("path");
 
-const env = process.env.NODE_ENV || "development";
-if (env === "development") require("dotenv").config();
+fastify.register(require("@fastify/static"), {
+  root: path.join(__dirname, "public"),
+});
 
 fastify.register(require("@fastify/auth"));
 fastify.decorate("verifyJWT", require("./plugins/authorization"));

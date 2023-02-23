@@ -1,5 +1,7 @@
 const { Model } = require("sequelize");
 const bcrypt = require("bcrypt");
+const generateUsername = require("../lib/randomNameGenerator");
+const generateAvatar = require("../lib/randomAvatarGenerator");
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
@@ -20,10 +22,6 @@ module.exports = (sequelize, DataTypes) => {
           isEmail: true,
         },
       },
-      username: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
       password: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -33,9 +31,29 @@ module.exports = (sequelize, DataTypes) => {
           this.setDataValue("password", hash);
         },
       },
+      username: {
+        type: DataTypes.STRING,
+        defaultValue: generateUsername,
+      },
+      profilePic: {
+        type: DataTypes.STRING,
+        defaultValue: generateAvatar,
+      },
+      latitude: {
+        type: DataTypes.FLOAT,
+      },
+      longitude: {
+        type: DataTypes.FLOAT,
+      },
+      isOnline: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
     },
     {
       sequelize,
+      freezeTableName: true,
     }
   );
 
