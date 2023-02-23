@@ -20,6 +20,9 @@ const proximitySchema = {
               profilePic: {
                 type: "string",
               },
+              distance: {
+                type: "number",
+              },
             },
           },
         },

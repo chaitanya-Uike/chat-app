@@ -19,21 +19,14 @@ class LocationService {
       ],
     };
 
-    // only get users within radius of 1000m (1km)
-    const proximityCheck = sequelize.fn(
-      "ST_DWithin",
+    const distance = sequelize.fn(
+      "ST_DistanceSphere",
       sequelize.literal("ST_MakePoint(latitude, longitude)"),
-      sequelize.literal(
-        "ST_MakePoint(" + latitude + "," + longitude + ")::geography"
-      ),
-      1000
+      sequelize.literal(`ST_MakePoint(${latitude},${longitude})`)
     );
 
-    // const distance = sequelize.fn(
-    //   "ST_Distance_Sphere",
-    //   sequelize.literal("ST_MakePoint(latitude, longitude)"),
-    //   sequelize.literal(`ST_MakePoint(${latitude},${longitude})`)
-    // );
+    // only get users within radius of 1000m (1km)
+    const proximityCheck = sequelize.where(distance, { [Op.lte]: 1000 });
 
     // only get users who were updated in the last 2 mins
     const userStatusCheck = {
@@ -50,7 +43,7 @@ class LocationService {
     };
 
     return User.findAll({
-      attributes: ["id", "username", "profilePic"],
+      attributes: ["id", "username", "profilePic", [distance, "distance"]],
       where: {
         [Op.and]: [
           cordinatesNotNullCheck,
