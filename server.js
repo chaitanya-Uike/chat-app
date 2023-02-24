@@ -1,15 +1,19 @@
 const fastify = require("fastify")({ logger: true });
 const db = require("./models");
 const path = require("path");
+const chatService = require("./services/chat");
 
 fastify.register(require("@fastify/static"), {
   root: path.join(__dirname, "public"),
 });
 
+fastify.register(require("fastify-socket.io"));
+
 fastify.register(require("@fastify/auth"));
 fastify.decorate("verifyJWT", require("./plugins/authorization"));
 fastify.register(require("./routes/auth"), { prefix: "/auth" });
 fastify.register(require("./routes/users"), { prefix: "/users" });
+fastify.register(require("./routes/chat"), { prefix: "/chat" });
 
 async function start() {
   const port = process.env.PORT || 5000;
@@ -18,7 +22,7 @@ async function start() {
 }
 
 db.sequelize
-  .sync({ alter: true })
+  .sync({ force: true })
   .then(() => {
     start();
   })
@@ -26,3 +30,7 @@ db.sequelize
     fastify.log.error(err);
     process.exit(1);
   });
+
+fastify.ready().then(() => {
+  fastify.io.on("connection", chatService.socketConnectionHandler(fastify.io));
+});

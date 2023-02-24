@@ -10,7 +10,14 @@ module.exports = (sequelize, DataTypes) => {
       return isMatch;
     }
 
-    static associate(models) {}
+    static associate(models) {
+      User.hasMany(models.Message, {
+        foreignKey: "senderId",
+      });
+      User.hasMany(models.Message, {
+        foreignKey: "recieverId",
+      });
+    }
   }
   User.init(
     {

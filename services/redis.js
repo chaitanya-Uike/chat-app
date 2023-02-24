@@ -8,7 +8,8 @@ class RedisService {
   }
 
   set(key, value, time) {
-    this.client.set(key, value, "EX", time);
+    if (key && value && time) this.client.set(key, value, "EX", time);
+    else throw new Error("provide key, value and time");
   }
 
   get(key) {
@@ -17,6 +18,10 @@ class RedisService {
 
   exists(key) {
     return this.client.exists(key);
+  }
+
+  delete(key) {
+    this.client.del(key);
   }
 }
 

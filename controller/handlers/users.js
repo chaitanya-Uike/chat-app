@@ -1,4 +1,4 @@
-const userService = require("../../services/userService");
+const userService = require("../../services/user");
 const HTTPStatus = require("../../lib/HTTPStatus");
 
 async function proximity(request, reply) {
