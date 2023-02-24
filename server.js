@@ -6,6 +6,8 @@ fastify.register(require("@fastify/static"), {
   root: path.join(__dirname, "public"),
 });
 
+fastify.register(require("fastify-socket.io"));
+
 fastify.register(require("@fastify/auth"));
 fastify.decorate("verifyJWT", require("./plugins/authorization"));
 fastify.register(require("./routes/auth"), { prefix: "/auth" });
@@ -26,3 +28,7 @@ db.sequelize
     fastify.log.error(err);
     process.exit(1);
   });
+
+fastify.ready().then(() => {
+  fastify.io.on("connection", (socket) => {});
+});

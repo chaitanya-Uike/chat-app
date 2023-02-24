@@ -1,5 +1,5 @@
 const { User } = require("../models");
-const locationService = require("./locationService");
+const locationService = require("./location");
 const { NotFoundError } = require("../lib/serverErrors");
 
 class UserService {
