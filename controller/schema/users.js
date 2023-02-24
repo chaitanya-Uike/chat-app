@@ -67,7 +67,7 @@ const profileSchema = {
   },
 };
 
-const heartbeatSchema = {
+const pingSchema = {
   body: {
     type: "object",
     properties: {
@@ -82,4 +82,4 @@ const heartbeatSchema = {
   },
 };
 
-module.exports = { proximitySchema, profileSchema, heartbeatSchema };
+module.exports = { proximitySchema, profileSchema, pingSchema };

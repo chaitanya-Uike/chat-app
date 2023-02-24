@@ -1,14 +1,10 @@
 const {
   proximitySchema,
   profileSchema,
-  heartbeatSchema,
+  pingSchema,
 } = require("../controller/schema/users");
 
-const {
-  proximity,
-  profile,
-  heartbeat,
-} = require("../controller/handlers/users");
+const { proximity, profile, ping } = require("../controller/handlers/users");
 
 function usersRoute(fastify, options, done) {
   fastify.get("/proximity", {
@@ -21,10 +17,10 @@ function usersRoute(fastify, options, done) {
     preHandler: fastify.auth([fastify.verifyJWT]),
     handler: profile,
   });
-  fastify.patch("/heartbeat", {
-    schema: heartbeatSchema,
+  fastify.patch("/ping", {
+    schema: pingSchema,
     preHandler: fastify.auth([fastify.verifyJWT]),
-    handler: heartbeat,
+    handler: ping,
   });
   done();
 }

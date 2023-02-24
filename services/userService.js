@@ -27,8 +27,8 @@ class UserService {
     return locationService.getUsersInProximity(id, latitude, longitude);
   }
 
-  processHeartbeat({ id, latitude, longitude }) {
-    return locationService.updateUserLocation(id, latitude, longitude);
+  updateLocationData({ id, latitude, longitude }) {
+    return User.update({ latitude, longitude }, { where: { id } });
   }
 }
 

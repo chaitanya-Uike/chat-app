@@ -54,10 +54,6 @@ class LocationService {
       },
     });
   }
-
-  updateUserLocation(id, latitude, longitude) {
-    return User.update({ latitude, longitude }, { where: { id } });
-  }
 }
 
 module.exports = new LocationService();

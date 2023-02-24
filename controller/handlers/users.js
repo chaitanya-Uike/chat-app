@@ -17,10 +17,10 @@ async function profile(request, reply) {
     .send({ profile, messsage: HTTPStatus.OK.message });
 }
 
-async function heartbeat(request, reply) {
+async function ping(request, reply) {
   const { id } = request.user;
-  await userService.processHeartbeat({ ...request.body, id });
+  await userService.updateLocationData({ ...request.body, id });
   reply.status(HTTPStatus.OK.code);
 }
 
-module.exports = { proximity, profile, heartbeat };
+module.exports = { proximity, profile, ping };
