@@ -19,6 +19,10 @@ class RedisService {
   exists(key) {
     return this.client.exists(key);
   }
+
+  delete(key) {
+    this.client.del(key);
+  }
 }
 
 module.exports = new RedisService();
