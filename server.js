@@ -7,6 +7,10 @@ fastify.register(require("@fastify/static"), {
   root: path.join(__dirname, "public"),
 });
 
+fastify.register(require("@fastify/cors"), {
+  origin: true,
+});
+
 fastify.register(require("fastify-socket.io"));
 
 fastify.register(require("@fastify/auth"));
