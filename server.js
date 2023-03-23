@@ -20,7 +20,7 @@ fastify.register(require("./routes/users"), { prefix: "/users" });
 fastify.register(require("./routes/chat"), { prefix: "/chat" });
 
 async function start() {
-  const port = process.env.PORT || 5000;
+  const port = process.env.PORT || 5050;
   const address = await fastify.listen({ port, host: "0.0.0.0" });
   console.log("[server]💫 ready at", address);
 }
